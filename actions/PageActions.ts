@@ -17,12 +17,17 @@ export class PageActions {
   async fill(locator: string | Locator, value: string) {
     Logger.info(`Filling ${typeof locator === 'string' ? locator : 'locator'} with value "${value}"`);
     const element = typeof locator === 'string' ? this.page.locator(locator) : locator;
+
+    await this.page.waitForLoadState('domcontentloaded'); 
+    await element.waitFor({ state: 'visible' });
     await element.fill(value);
   }
 
   async click(locator: string | Locator) {
     Logger.info(`Clicking on ${typeof locator === 'string' ? locator : 'locator'}`);
     const element = typeof locator === 'string' ? this.page.locator(locator) : locator;
+    
+    await element.waitFor({ state: 'visible' });
     await element.click();
   }
 

@@ -60,7 +60,7 @@ export const test = base.extend<{
     } finally {
       if (!page.isClosed()) {
         Logger.info(`Closing page for test: ${testInfo.title}`);
-        await page.close();
+       // await page.close();
       }
     }
   },

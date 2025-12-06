@@ -4,20 +4,21 @@ import { LoginPage } from '../pages/LoginPage';
 import loginData from '../data/loginData.json'
 import ENV from '../utils/config';
 
-const env = (process.env.ENV as 'recette' | 'preprod' | 'prod') || 'recette';
+const env = process.env.ENV ?? 'recette' as const;
 //const CONFIG = ENV[env];
 const CONFIG = ENV['prod'];
 
-
-test.describe('Login Test', () => {
+test.describe('Test connexion', () => {
 
     test('Login Pass', async ({ page }) => {
         const actions = new PageActions(page);
         const loginPage = new LoginPage(page);
 
-        actions.goto(`${CONFIG.baseURL}/login`);
-        loginPage.login(loginData.validUser.email, loginData.validUser.password);
-        loginPage.assertLoginSuccess();
+         await actions.goto(`${CONFIG.baseURL}/login`); 
+      //  await actions.goto(CONFIG.baseURL);
+
+        await loginPage.login(loginData.validUser.email, loginData.validUser.password);
+        await loginPage.assertLoginSuccess();
 
     });
 
@@ -25,9 +26,11 @@ test.describe('Login Test', () => {
         const actions = new PageActions(page);
         const loginPage = new LoginPage(page);
 
-        actions.goto(`${CONFIG.baseURL}/login`);
-        loginPage.login(loginData.invalidUser.email, loginData.invalidUser.password);
-        loginPage.assertLoginFail();
+        await actions.goto(`${CONFIG.baseURL}/login`); 
+        await loginPage.login(loginData.invalidUser.email, loginData.invalidUser.password);
+        await loginPage.assertLoginFail();
+        
+
 
     });
 
