@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
-import { PageActions } from '../actions/PageActions';
-import { AddProductPage } from '../pages/AddProductPage';
-import { CheckoutPage } from '../pages/CheckoutPage';
-import { HomePage } from '../pages/HomePage';
-import { LoginPage } from '../pages/LoginPage';
-import productData from '../data/productData.json';
-import loginData from '../data/loginData.json';
+import { PageActions } from '../../actions/PageActions';
+import { AddProductPage } from '../../pages/product/AddProductPage';
+import { CheckoutPage } from '../../pages/payment/CheckoutPage';
+import { HomePage } from '../../pages/login/HomePage';
+import { LoginPage } from '../../pages/login/LoginPage';
+import productData from '../../data/productData.json';
+import loginData from '../../data/loginData.json';
 
-import ENV from '../utils/config';
+import ENV from '../../utils/config';
 const env = (process.env.ENV as 'recette' | 'preprod' | 'prod') || 'recette';
 const CONFIG = ENV['prod'];
 
@@ -25,11 +25,11 @@ test.describe('Buy product Actions', () => {
         await loginPage.assertLoginSuccess();
 
         // 3. Sélectionner et Personnaliser le Produit
-        await addProductPage.productSelection();
-        await addProductPage.customizeAndAddProductToCart();
+        await addProductPage.productSelection(); 
+        await addProductPage.customizeAndAddProductToCart(); 
 
         // 4. Aller au panier et passer à la caisse (Checkout)
-        await addProductPage.ShoppingCart();
+        await addProductPage.ShoppingCart(); 
 
         // 5. Adresse de facturation (Billing Address)
         await checkoutPage.billingAddress(
@@ -43,13 +43,13 @@ test.describe('Buy product Actions', () => {
         await checkoutPage.shippingAddress(); 
 
         // 7.  livraison (Shipping Method)
-        await checkoutPage.shippingMethod();
-        
+        await checkoutPage.shippingMethod(); 
+
         // 8. Paiement
-        await checkoutPage.payment();
+        await checkoutPage.payment(); 
 
         // 9. Confirmer la commande
-        await checkoutPage.confirmOrder();
+        await checkoutPage.confirmOrder(); 
         await checkoutPage.assertions.expectVisible(checkoutPage.orderConfirmationMessage);
     });
 });

@@ -1,5 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
-import { PageActions } from '../actions/PageActions';
+import { PageActions } from '../../actions/PageActions';
 
 export class HomePage {
   readonly page : Page;
